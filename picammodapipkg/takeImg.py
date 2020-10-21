@@ -15,4 +15,5 @@ def takeImg():
     filename = 'img'+currentDateTime
     camera.capture('/home/pi/picammodapipkg/picammodapipkg/imgOutput/'+filename+'.jpg')
     camera.stop_preview()
+    camera.close()
 

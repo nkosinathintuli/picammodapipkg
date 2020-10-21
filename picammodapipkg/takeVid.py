@@ -15,6 +15,7 @@ def takeVid():
     camera.start_recording('/home/pi/picammodapipkg/picammodapipkg/vidOutput/'+filename+'.h264')
     camera.wait_recording(30)
     camera.stop_recording()
+    camera.close()
     print("Finished recording!")
 
 
