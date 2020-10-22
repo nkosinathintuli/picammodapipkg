@@ -1,10 +1,16 @@
 import anvil.server
 import picamera
+import time
+import adc
 import smtplib
+import motionDetect
+
+motionState = False
 server = smtplib.SMTP('smtp.gmail.com',587)
 server.starttls()
-server.login("iraspberry87@gmail.com","32113140997")
+server.login("iraspberry87@gmail.com","cam25project")
 online=False
+online2=False
 
 anvil.server.connect("BP2P6K2WEAVZG7EMXI56O6AU-2HHQWLD3DEXHTCGB")
 
@@ -22,6 +28,16 @@ def takevideo():
         online=False
         start_stop(online)
 
+@anvil.server.callable
+def detectmotion():
+    global online2
+    if online2==False:
+        online2=True
+#        motiondetect(online2)
+    elif online2==False:
+        online2==True
+#        motiondetect(online2)
+
 def start_stop(on1):
     global message
     global server
@@ -35,15 +51,34 @@ def start_stop(on1):
         server.sendmail("iraspberry87@gmail.com","ntaboka87@gmail.com",mse)
         server.quit()
 
+'''def motiondetect(on2):
+    global motionState
+    global server
+    if on2==True:
+        while True:
+            motionState = motionDetect.motion()
+            if motionState:
+                mse="MOTION WAS DETECTED!"
+                server.sendmail("iraspberry87@gmail.com","ntaboka87@gmail.com",mse)
+                server.quit()'''
+
 @anvil.server.callable
 def display_message():
     global message
     return message
 
 def main():
-    global online
+    global online2
+    global server
+    global motionState
     while True:
-        print(" ")
+        if online2==True:
+            motionState=motionDetect.motion()
+            if motionState:
+                mse="MOTION WAS DETECTED!"
+                server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
+                server.quit()
+        print(adc.readadc(0))
 
 if __name__=="__main__":
     main()
