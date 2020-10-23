@@ -9,11 +9,10 @@ def takeImg():
     camera.start_preview()
     # Camera warm-up time
     e = datetime.datetime.now()
-    sleep(2)
+    sleep(5)
 
     currentDateTime =  '_'+str(e.year)+str(e.month)+str(e.day)+'_'+str(e.hour)+str(e.minute)+str(e.second)
     filename = 'img'+currentDateTime
-    camera.capture('/home/pi/picammodapipkg/picammodapipkg/imgOutput/'+filename+'.jpg')
+    camera.capture('/home/pi/Desktop/'+filename+'.jpg')
     camera.stop_preview()
     camera.close()
-

@@ -28,15 +28,15 @@ def takevideo():
         online=False
         start_stop(online)
 
-@anvil.server.callable
+'''@anvil.server.callable
 def detectmotion():
     global online2
     if online2==False:
         online2=True
 #        motiondetect(online2)
-    elif online2==False:
-        online2==True
-#        motiondetect(online2)
+    elif online2==True:
+        online2==False
+#        motiondetect(online2)'''
 
 def start_stop(on1):
     global message
@@ -48,7 +48,7 @@ def start_stop(on1):
         camera.stop_recording()
         message="footage captured"
         mse="Subject: {}\n\n{}".format("NEW FOOTAGE CAPTURED", "A new video recording has just been captured on your device")
-        server.sendmail("iraspberry87@gmail.com","ntaboka87@gmail.com",mse)
+        server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
         server.quit()
 
 '''def motiondetect(on2):
@@ -68,17 +68,29 @@ def display_message():
     return message
 
 def main():
-    global online2
-    global server
-    global motionState
+# global online2
+#    global server
+#    global motionState
     while True:
-        if online2==True:
-            motionState=motionDetect.motion()
-            if motionState:
-                mse="MOTION WAS DETECTED!"
-                server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
-                server.quit()
-        print(adc.readadc(0))
+#        if online2==True:
+#            motionState=motionDetect.motion()
+#            if motionState:
+#                mse="MOTION WAS DETECTED!"
+#                server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
+#                server.quit()
+#                 print("nl")'''
+        if adc.readadc(0)<100:
+            print("light level is low")
+            print(adc.readadc(0))
+            print(" ")
+        elif adc.readadc(0)<200:
+            print("light level is medium")
+            print(adc.readadc(0))
+            print(" ")
+        else:
+            print("light level is high")
+            print(adc.readadc(0))
+            print(" ")
 
 if __name__=="__main__":
     main()
