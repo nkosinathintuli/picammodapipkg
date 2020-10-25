@@ -1,6 +1,6 @@
 import anvil.server
 import picamera
-import time
+import takeImg
 import adc
 import smtplib
 import motionDetect
@@ -11,12 +11,14 @@ server.starttls()
 server.login("iraspberry87@gmail.com","cam25project")
 online=False
 online2=False
+started=False
 
 anvil.server.connect("BP2P6K2WEAVZG7EMXI56O6AU-2HHQWLD3DEXHTCGB")
 
 camera = picamera.PiCamera();
 camera.resolution = (1024, 768);
 message = " "
+message2=" "
 
 @anvil.server.callable
 def takevideo():
@@ -28,15 +30,16 @@ def takevideo():
         online=False
         start_stop(online)
 
-'''@anvil.server.callable
-def detectmotion():
+@anvil.server.callable
+def takelightvideo():
+    global message
     global online2
     if online2==False:
         online2=True
-#        motiondetect(online2)
+        message="light induced recording enabled"
     elif online2==True:
-        online2==False
-#        motiondetect(online2)'''
+        online2=False
+        message="light induced recording disabled"
 
 def start_stop(on1):
     global message
@@ -51,47 +54,44 @@ def start_stop(on1):
         server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
         server.quit()
 
-'''def motiondetect(on2):
-    global motionState
-    global server
-    if on2==True:
-        while True:
-            motionState = motionDetect.motion()
-            if motionState:
-                mse="MOTION WAS DETECTED!"
-                server.sendmail("iraspberry87@gmail.com","ntaboka87@gmail.com",mse)
-                server.quit()'''
+def light_induced(ldr):
+    global started
+    if started==False:
+        if ldr>100:
+            camera.start_recording('Desktop/lightfootage.h264')
+            started=True
+    elif started==True:
+        if ldr<100:
+            camera.stop_recording()
+            started=False
+            server = smtplib.SMTP('smtp.gmail.com',587)
+            server.starttls()
+            server.login("iraspberry87@gmail.com","cam25project")
+            mse="Subject: {}\n\n{}".format("NEW LIGHT INDUCED FOOTAGE CAPTURED", "A new light triggered video has been captured")
+            server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
+            server.quit()
 
 @anvil.server.callable
 def display_message():
     global message
     return message
 
-def main():
+#def main():
 # global online2
 #    global server
 #    global motionState
+try:
     while True:
-#        if online2==True:
-#            motionState=motionDetect.motion()
-#            if motionState:
-#                mse="MOTION WAS DETECTED!"
-#                server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
-#                server.quit()
-#                 print("nl")'''
-        if adc.readadc(0)<100:
-            print("light level is low")
-            print(adc.readadc(0))
-            print(" ")
-        elif adc.readadc(0)<200:
-            print("light level is medium")
-            print(adc.readadc(0))
-            print(" ")
-        else:
-            print("light level is high")
-            print(adc.readadc(0))
-            print(" ")
+#    motionState=motionDetect.motion()
+        if online2==True:
+            light_induced(adc.readadc(0))
+        print "light = ",adc.readadc(0)
+except KeyboardInterrupt:
+    print("program terminated")
+#    if online2==True:
+#        if motionState:
+#            print("Motion Detected!")
 
-if __name__=="__main__":
-    main()
+#if __name__=="__main__":
+#    main()
 
