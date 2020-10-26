@@ -1,19 +1,23 @@
-from time import sleep
-from picamera import PiCamera
+import time 
+import picamera
 import datetime 
 
 def takeImg():
 
-    camera = PiCamera()
+    camera = picamera.PiCamera()
     camera.resolution = (1024, 768)
     camera.start_preview()
     # Camera warm-up time
-    e = datetime.datetime.now()
-    sleep(2)
+    time.sleep(2)
 
-    currentDateTime =  '_'+str(e.year)+str(e.month)+str(e.day)+'_'+str(e.hour)+str(e.minute)+str(e.second)
-    filename = 'img'+currentDateTime
+    dateAndTime = datetime.datetime.now()
+    prefix = 'img_'
+    suffix = dateAndTime.strftime("%Y%m%d_%H%M%S")
+    filename = prefix+suffix
+
     camera.capture('/home/pi/picammodapipkg/picammodapipkg/imgOutput/'+filename+'.jpg')
+    print("Image saved!")
     camera.stop_preview()
     camera.close()
+
 
