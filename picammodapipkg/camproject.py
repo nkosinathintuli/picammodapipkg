@@ -1,3 +1,7 @@
+"""This module contains the functions for taking video recordings
+and enabling/disabling light triggered automatic recording
+
+"""
 import anvil.server
 import picamera
 import takeImg
@@ -22,6 +26,8 @@ message2=" "
 
 @anvil.server.callable
 def takevideo():
+    """Callable function to set/reset a flag to enable/disable
+    a video recording"""
     global online
     if online==False:
         online=True
@@ -32,6 +38,9 @@ def takevideo():
 
 @anvil.server.callable
 def takelightvideo():
+    """Callable function to set/reset a flag to enable/disable
+    automatic recording based on light intensity
+    """
     global message
     global online2
     if online2==False:
@@ -42,6 +51,7 @@ def takelightvideo():
         message="light induced recording disabled"
 
 def start_stop(on1):
+    """This is the function that does the actual video recording"""
     global message
     global server
     if on1==True:
@@ -56,6 +66,9 @@ def start_stop(on1):
         server.quit()
 
 def light_induced(ldr):
+    """This starts/stops video recording if
+    ldr<=200 and ldr>200 respectively
+    """
     global started
     if started==False:
         if ldr<=200:
@@ -75,6 +88,7 @@ def light_induced(ldr):
 
 @anvil.server.callable
 def display_message():
+    """Callable function to display appropriate alert on button press"""
     global message
     return message
 
@@ -84,5 +98,4 @@ try:
             light_induced(adc.readadc(0))
         print "light = ",adc.readadc(0)
 except KeyboardInterrupt:
-    print("program terminated")
-
+    print("program terminated")  # This is the output when the program is terminated
