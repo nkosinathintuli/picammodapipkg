@@ -1,3 +1,8 @@
+"""This module contains the functions involved in
+motion detection and sending of email alerts.
+
+"""
+
 import takeImg 
 import motionDetect
 import smtplib
