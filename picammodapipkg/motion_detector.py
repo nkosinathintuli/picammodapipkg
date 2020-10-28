@@ -72,4 +72,4 @@ try:
                 send_mail(img)
                 print("MOTION DETECTED!")
 except KeyboardInterrupt:
-    print("program terminated")
+    print("program terminated")  # This is the output when the program is terminated
