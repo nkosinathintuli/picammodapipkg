@@ -23,6 +23,7 @@ message2=" "
 
 @anvil.server.callable
 def detectmotion():
+    """This enables or disables motion detection"""
     global message2
     global online2
     if online2==False:
@@ -34,10 +35,12 @@ def detectmotion():
 
 @anvil.server.callable
 def display_message2():
+    """This returns an alert message on button press"""
     global message2
     return message2
 
 def send_mail(filename):
+    """Send an email with image attachment"""
     msg = MIMEMultipart()
     msg['From'] = 'iraspberry87@gmail.com'
     msg['To']='iraspberry87@gmail.com'
