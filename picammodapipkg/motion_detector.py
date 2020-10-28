@@ -1,5 +1,4 @@
 import takeImg 
-#import takeVid
 import motionDetect
 import smtplib
 import anvil.server
@@ -52,24 +51,17 @@ def send_mail(filename):
     text=msg.as_string()
     server.sendmail('iraspberry87@gmail.com','iraspberry87@gmail.com',text)
     server.quit()
+
 try:
     while True:
         server=smtplib.SMTP('smtp.gmail.com',587)
         server.starttls()
         server.login("iraspberry87@gmail.com","cam25project")
         motionState = motionDetect.motion()
-    
         if online2==True:
             if motionState:
                 img=takeImg.takeImg()
                 send_mail(img)
-          #  message2="MOTION DETECTED!"
-          #  message="motion was detected at the site"
-          #  mse="Subject: {}\n\n{}".format("MOTION DETECTED",message)
-          #  server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
-         #   server.quit()
                 print("MOTION DETECTED!")
-#            online2=False
-#        print("Motion was detected!")
 except KeyboardInterrupt:
     print("program terminated")
