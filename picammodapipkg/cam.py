@@ -11,8 +11,8 @@ class cam:
     defaultPath = ""
     defaultImgSet = ""
     defaultVidSet = ""
-    defaultImgName =""
-    defaultVidName = ""
+    #defaultImgName ="" 
+    #defaultVidName = ""
     defaultVidLen = ""
     defaultVidExt = ""
     defaultImgExt = ""
@@ -25,7 +25,7 @@ class cam:
         time.sleep(2)
         filename = generateDefaultName("img")
         camera.capture(filename+'.jpg')
-        print("Image saved!")
+        print(filename+" captured!")
         camera.stop_preview()
         camera.close()
     
@@ -37,7 +37,7 @@ class cam:
         time.sleep(2)
         filename = generateDefaultName("img")
         camera.capture(path+filename+'.jpg')
-        print("image "+filename+" captured")
+        print(filename+" captured!")
         camera.stop_preview()
         camera.close()
     
