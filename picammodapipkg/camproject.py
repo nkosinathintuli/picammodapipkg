@@ -50,7 +50,8 @@ def start_stop(on1):
     elif on1==False:
         camera.stop_recording()
         message="footage captured"
-        mse="Subject: {}\n\n{}".format("NEW FOOTAGE CAPTURED", "A new video recording has just been captured on your device")
+        mse="Subject: {}\n\n{}".format("NEW FOOTAGE CAPTURED",
+                                       "New video recording has been captured")
         server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
         server.quit()
 
@@ -67,7 +68,8 @@ def light_induced(ldr):
             server = smtplib.SMTP('smtp.gmail.com',587)
             server.starttls()
             server.login("iraspberry87@gmail.com","cam25project")
-            mse="Subject: {}\n\n{}".format("NEW LIGHT INDUCED FOOTAGE CAPTURED", "A new light triggered video has been captured")
+            mse="Subject: {}\n\n{}".format("NEW LIGHT INDUCED FOOTAGE CAPTURED",
+                                           "New light triggered video captured")
             server.sendmail("iraspberry87@gmail.com","iraspberry87@gmail.com",mse)
             server.quit()
 
