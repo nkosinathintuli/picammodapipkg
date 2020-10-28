@@ -57,11 +57,11 @@ def start_stop(on1):
 def light_induced(ldr):
     global started
     if started==False:
-        if ldr>100:
+        if ldr<=200:
             camera.start_recording('Desktop/lightfootage.h264')
             started=True
     elif started==True:
-        if ldr<100:
+        if ldr>200:
             camera.stop_recording()
             started=False
             server = smtplib.SMTP('smtp.gmail.com',587)
@@ -76,22 +76,11 @@ def display_message():
     global message
     return message
 
-#def main():
-# global online2
-#    global server
-#    global motionState
 try:
     while True:
-#    motionState=motionDetect.motion()
         if online2==True:
             light_induced(adc.readadc(0))
         print "light = ",adc.readadc(0)
 except KeyboardInterrupt:
     print("program terminated")
-#    if online2==True:
-#        if motionState:
-#            print("Motion Detected!")
-
-#if __name__=="__main__":
-#    main()
 
