@@ -10,4 +10,4 @@ Development Lead
 Contributors
 ------------
 
-None yet. Why not be the first?
+* Taboka Nyadza <nydtab001@myuct.ac.za>
