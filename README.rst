@@ -26,9 +26,15 @@ Python Boilerplate contains all the boilerplate you need to create a Python pack
 Features
 --------
 
-This package contains an API and a demonstrator application using the API
+This package contains an API and a demonstrator application using the API.
+
+API:
 
 * TODO
+
+Demonstrator:
+
+*
 
 Credits
 -------
