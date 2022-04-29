@@ -6,4 +6,4 @@ flake8==4.0.1
 tox==3.24.5
 coverage==6.3.2
 twine==4.0.0
-Click==8.1.2
+Click==8.1.3
